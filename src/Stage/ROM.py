@@ -2,6 +2,7 @@ from src.Stage.Stage import *
 from src.Stage.UEFI_Shim import *
 
 class ROM(Stage):
+    """Represents the ROM stage in the boot sequence."""
     def __init__(self):
         super().__init__('ROM_image')
     

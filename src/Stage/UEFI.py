@@ -2,6 +2,7 @@ from src.Stage.Stage import *
 from src.Stage.Kernel import *
 
 class UEFI(Stage):
+    """Represents the UEFI stage in the boot sequence."""
     def __init__(self):
         super().__init__('UEFI_image')
 

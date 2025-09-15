@@ -3,6 +3,7 @@ from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import serialization
 
 class Fuse():
+    """Simulate a hardware fuse that can be blown to generate a device secret."""
     __secret = ""
     _blown = False
 
@@ -12,13 +13,16 @@ class Fuse():
 
     @property
     def is_blown(self):
+        """Return a boolean indicating if the fuse has been blown."""
         return self._blown
 
     @property
     def read(self):
+        """Read the device secret"""
         return self.__secret
 
     def blow(self):
+        """Blow the fuse to generate and store the device secret."""
         if self._blown:
             print("WARN: fuse already blown!")
         if not self._blown:

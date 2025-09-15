@@ -1,6 +1,7 @@
 from src.Stage.Stage import *
 
 class Kernel(Stage):
+    """Represents the Kernel stage in the boot sequence."""
     def __init__(self):
         super().__init__('kernel_image')
 

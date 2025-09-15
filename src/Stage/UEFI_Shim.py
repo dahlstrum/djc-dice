@@ -2,6 +2,7 @@ from src.Stage.Stage import *
 from src.Stage.UEFI import *
 
 class UEFI_Shim(Stage):
+    """Represents the UEFI Shim stage in the boot sequence."""
     def __init__(self):
         super().__init__('UEFI_shim_image')
     

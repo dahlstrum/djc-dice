@@ -2,6 +2,7 @@ from src.Device.Fuse import *
 from src.Stage.ROM import *
 
 class MockDevice():
+    """Simulates a device with a unique secret and a multi-stage boot process."""
     __secret = None
     current_stage = None
 
@@ -14,6 +15,9 @@ class MockDevice():
         
 
     def boot(self):
+        """Simulate the device boot process
+        
+        Returns the final Composite Device Identifier in hex format."""
         rom = ROM()
         self.current_stage = rom
 
@@ -31,11 +35,9 @@ class MockDevice():
         # delete uds from memory and lock device secret
         del temp_uds
         self.__secret.lock()
-
-        
-        # rom.set_CDI(cdi.hex())
         rom.set_CDI(cdi)
        
+        # iterate through each stage, calculating the CDI / measuring next stage
         while(self.current_stage.get_next() != None):
             print(f'INFO: \tStage: { self.current_stage.get_next().get_label() }; CDI: { cdi.hex() } ')
             self.current_stage = self.current_stage.get_next()
@@ -48,8 +50,10 @@ class MockDevice():
                 cdi = self.current_stage.calculate_CDI(cdi, next_stage_measurement)
         
         return cdi.hex()
-    
+
+
 class DeviceSecret():
+    """Manages the device's unique secret (UDS) and controls its accessibility."""
     __UDS = r''
     
     def __init__(self, fuse):
@@ -61,11 +65,13 @@ class DeviceSecret():
         self.can_read_latch = True
 
     def lock(self):
+        """Lock the device secret from being read or accessed."""
         print("INFO: locking UDS")
         self.can_read_latch = False
 
     @property
     def read(self):
+        """Read the device secret if the latch is set to readable."""
         if self.can_read_latch:
             return self.__UDS
         
